@@ -1,5 +1,6 @@
 from scipy import stats
 import numpy as np
+from decimal import Decimal, ROUND_HALF_UP
 import math
 
 def normarize_variance(variance: float, n: int):
@@ -7,14 +8,22 @@ def normarize_variance(variance: float, n: int):
 
 def interval_estimate_mean_with_pop_variance(sample_mean: float, pop_varianse: float, n: int):
     normarized_varianse = normarize_variance(pop_varianse, n)
-    bottom, up = stats.norm.interval(0.95, loc=sample_mean, scale=normarized_varianse)
-    return (bottom, up)
+    bottom, top = stats.norm.interval(0.95, loc=sample_mean, scale=normarized_varianse)
+    return (bottom, top)
 
 def interval_estimate_mean_without_pop_variance(sample_mean: float, sample_varianse: float, n: int):
-    degree_of_freedom = n - 1
-    normarized_variance = normarize_variance(sample_varianse, degree_of_freedom)
-    bottom, up = stats.t.interval(0.95, loc=sample_mean, scale=normarized_variance, df=degree_of_freedom)
-    return (bottom, up)
+    df = n - 1
+    normarized_variance = normarize_variance(sample_varianse, df)
+    bottom, top = stats.t.interval(0.95, loc=sample_mean, scale=normarized_variance, df=df)
+    return (bottom, top)
+
+def interval_estimate_variance(sample_variance: float, n: int):
+    df = n - 1
+    chi2_lower = Decimal(stats.chi2.ppf(0.975, df)).quantize(Decimal('0.001'), rounding=ROUND_HALF_UP)
+    chi2_higher = Decimal(stats.chi2.ppf(0.025, df)).quantize(Decimal('0.001'), rounding=ROUND_HALF_UP)
+    bottom = n * sample_variance / float(chi2_lower)
+    top = n * sample_variance / float(chi2_higher)
+    return (bottom, top)
 
 def main():
     data = np.array([100, 70, 30, 60, 50])
@@ -27,11 +36,15 @@ def main():
     print("不偏分散: ", unbiased_variance)
 
     pop_variance = 625
-    bottom, up = interval_estimate_mean_with_pop_variance(sample_mean, pop_variance, data_size)
-    print("母平均の95%信頼区間(母分散既知): [", bottom, ", ", up, "]")
+    bottom, top = interval_estimate_mean_with_pop_variance(sample_mean, pop_variance, data_size)
+    print("母平均の95%信頼区間(母分散既知): [", bottom, ", ", top, "]")
 
-    bottom, up = interval_estimate_mean_without_pop_variance(sample_mean, sample_variance, data_size)
-    print("母平均の95%信頼区間(母平均未知): [ {}, {} ]".format(bottom, up))
+    bottom, top = interval_estimate_mean_without_pop_variance(sample_mean, sample_variance, data_size)
+    print("母平均の95%信頼区間(母分散未知): [ {}, {} ]".format(bottom, top))
+
+    bottom, top = interval_estimate_variance(sample_variance, data_size)
+    print("母分散の95%信頼区間            : [ {}, {} ]".format(bottom, top))
+
 
 if __name__ == "__main__":
     main()
