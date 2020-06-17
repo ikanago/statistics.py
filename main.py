@@ -39,6 +39,9 @@ def main():
         import sys
         print("信頼係数は(0, 1)の範囲で指定してください．", file=sys.stderr)
         exit()
+    if pop_variance <= 0:
+        import sys
+        print("母分散既知の母平均の区間推定はできません．", file=sys.stderr)
 
     with open(input_file) as f:
         reader = csv.reader(f)
@@ -47,21 +50,22 @@ def main():
 
     data_size = len(data)
     sample_mean, sample_variance, unbiased_variance = describe(data)
+    print("データ数: {}".format(data_size))
     print("標本平均: {}".format(sample_mean))
     print("標本分散: {}".format(sample_variance))
     print("不偏分散: {}".format(unbiased_variance))
 
     bottom, top = interval_estimation.interval_estimate_mean_with_pop_variance(
         sample_mean, pop_variance, data_size, confidence)
-    print("母平均の95%信頼区間(母分散既知): [ {}, {} ]".format(bottom, top))
+    print("母平均の{}%信頼区間(母分散既知): [ {}, {} ]".format(int(confidence * 100), bottom, top))
 
     bottom, top = interval_estimation.interval_estimate_mean_without_pop_variance(
         sample_mean, sample_variance, data_size, confidence)
-    print("母平均の95%信頼区間(母分散未知): [ {}, {} ]".format(bottom, top))
+    print("母平均の{}%信頼区間(母分散未知): [ {}, {} ]".format(int(confidence * 100), bottom, top))
 
     bottom, top = interval_estimation.interval_estimate_variance(
         sample_variance, data_size, confidence)
-    print("母分散の95%信頼区間            : [ {}, {} ]".format(bottom, top))
+    print("母分散の{}%信頼区間            : [ {}, {} ]".format(int(confidence * 100), bottom, top))
 
 
 if __name__ == "__main__":

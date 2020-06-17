@@ -68,10 +68,8 @@ def interval_estimate_variance(sample_variance: float, n: int, confidence: float
     (`bottom`, `top`): 推定した信頼区間の下限と上限
     """
     df = n - 1
-    chi2_lower = Decimal(stats.chi2.ppf((1 + confidence) / 2.0, df)
-                         ).quantize(Decimal('0.001'), rounding=ROUND_HALF_UP)
-    chi2_higher = Decimal(stats.chi2.ppf(
-        (1 - confidence) / 2.0, df)).quantize(Decimal('0.001'), rounding=ROUND_HALF_UP)
+    chi2_lower = stats.chi2.ppf((1 + confidence) / 2.0, df)
+    chi2_higher = stats.chi2.ppf((1 - confidence) / 2.0, df)
     bottom = n * sample_variance / float(chi2_lower)
     top = n * sample_variance / float(chi2_higher)
     return (bottom, top)
