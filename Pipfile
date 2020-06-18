@@ -5,11 +5,11 @@ verify_ssl = true
 
 [dev-packages]
 pylint = "*"
+autopep8 = "*"
 
 [packages]
 scipy = "*"
 numpy = "*"
-autopep8 = "*"
 click = "*"
 
 [requires]
