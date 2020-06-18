@@ -1,7 +1,8 @@
+import math
+from decimal import ROUND_HALF_UP, Decimal
+
 import numpy as np
 from scipy import stats
-from decimal import Decimal, ROUND_HALF_UP
-import math
 
 
 def normarize_variance(variance: float, n: int):
