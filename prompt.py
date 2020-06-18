@@ -7,15 +7,14 @@ from interval_estimation import (interval_estimate_mean_with_pop_variance,
 
 
 def prompt_describe(data: list):
-    data_size = len(data)
-    sample_mean, sample_variance, unbiased_variance = describe(data)
-    print("データ数: {}".format(data_size))
+    length, sample_mean, sample_variance, unbiased_variance = describe(data)
+    print("データ数: {}".format(length))
     print("標本平均: {}".format(sample_mean))
     print("標本分散: {}".format(sample_variance))
     print("不偏分散: {}".format(unbiased_variance))
 
 
-def prompt_interval_estimate(sample_mean: float, sample_variance: float, pop_variance: float, confidence: float, n: int):
+def prompt_interval_estimate(n: int, sample_mean: float, sample_variance: float, pop_variance: float, confidence: float):
     if pop_variance > 0:
         bottom, top = interval_estimate_mean_with_pop_variance(
             sample_mean, pop_variance, n, confidence)

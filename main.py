@@ -41,12 +41,12 @@ def est(ctx, pop_variance: float, confidence: float):
         import sys
         print("信頼係数は(0, 1)の範囲で指定してください．", file=sys.stderr)
         exit()
-    
+
     for i, array in enumerate(data):
         print("系列{}".format(i + 1))
-        sample_mean, sample_variance, _ = describe(array)
+        length, sample_mean, sample_variance, _ = describe(array)
         prompt.prompt_interval_estimate(
-            sample_mean, sample_variance, pop_variance, confidence, len(array))
+            length, sample_mean, sample_variance, pop_variance, confidence)
         print()
 
 
