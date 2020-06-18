@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def describe(data: np.ndarray) -> (float, float, float):
+def describe(data: list) -> (float, float, float):
     """
     データの基本的な統計量を求める．
 
@@ -15,6 +15,7 @@ def describe(data: np.ndarray) -> (float, float, float):
 
         データの標本平均，標本分散，不偏分散
     """
+    data = np.array(data)
     sample_mean = data.mean()
     sample_variance = data.var()
     unbiased_variance = data.var(ddof=1)

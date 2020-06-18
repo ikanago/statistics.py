@@ -15,8 +15,9 @@ from describe import describe
 def cmd(ctx, file):
     with open(file) as f:
         reader = csv.reader(f)
+        # 2-dimensional array, but each row can be different number of elements.
         contents = [[float(v) for v in row] for row in reader]
-        data = np.array(contents[0])
+        data = contents
         ctx.obj["data"] = data
 
 
@@ -24,7 +25,10 @@ def cmd(ctx, file):
 @click.pass_context
 def desc(ctx):
     data = ctx.obj["data"]
-    prompt.prompt_describe(data)
+    for i, array in enumerate(data):
+        print("系列{}".format(i + 1))
+        prompt.prompt_describe(array)
+        print()
 
 
 @cmd.command()
@@ -37,9 +41,13 @@ def est(ctx, pop_variance: float, confidence: float):
         import sys
         print("信頼係数は(0, 1)の範囲で指定してください．", file=sys.stderr)
         exit()
-    sample_mean, sample_variance, _ = describe(data)
-    prompt.prompt_interval_estimate(
-        sample_mean, sample_variance, pop_variance, confidence, len(data))
+    
+    for i, array in enumerate(data):
+        print("系列{}".format(i + 1))
+        sample_mean, sample_variance, _ = describe(array)
+        prompt.prompt_interval_estimate(
+            sample_mean, sample_variance, pop_variance, confidence, len(array))
+        print()
 
 
 def main():

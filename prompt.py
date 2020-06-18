@@ -6,7 +6,7 @@ from interval_estimation import (interval_estimate_mean_with_pop_variance,
                                  interval_estimate_variance)
 
 
-def prompt_describe(data: np.ndarray):
+def prompt_describe(data: list):
     data_size = len(data)
     sample_mean, sample_variance, unbiased_variance = describe(data)
     print("データ数: {}".format(data_size))
