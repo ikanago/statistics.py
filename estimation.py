@@ -112,7 +112,8 @@ def cmd(file, pop_variance: float, confidence: float):
         contents = [[float(v) for v in row] for row in reader]
         for i, row in enumerate(contents):
             n, sample_mean, sample_var, _ = describe(row)
-            result = estimate_all(n, sample_mean, sample_var, pop_variance, confidence)
+            result = estimate_all(
+                n, sample_mean, sample_var, pop_variance, confidence)
             print("系列{}".format(i + 1))
             print(result)
 
