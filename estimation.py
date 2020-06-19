@@ -1,8 +1,12 @@
+import csv
 import math
 from decimal import ROUND_HALF_UP, Decimal
 
+import click
 import numpy as np
 from scipy import stats
+
+from describe import describe
 
 
 def normarize_variance(variance: float, n: int):
@@ -74,3 +78,48 @@ def interval_estimate_variance(sample_variance: float, n: int, confidence: float
     bottom = n * sample_variance / float(chi2_lower)
     top = n * sample_variance / float(chi2_higher)
     return (bottom, top)
+
+
+def estimate_all(n: int, sample_mean: float, sample_variance: float, pop_variance: float, confidence: float):
+    return_str = ""
+    if pop_variance > 0:
+        bottom, top = interval_estimate_mean_with_pop_variance(
+            sample_mean, pop_variance, n, confidence)
+        return_str += "母平均の{}%信頼区間(母分散既知): [ {}, {} ]\n".format(
+            int(confidence * 100), bottom, top)
+
+    bottom, top = interval_estimate_mean_without_pop_variance(
+        sample_mean, sample_variance, n, confidence)
+    return_str += "母平均の{}%信頼区間(母分散未知): [ {}, {} ]\n".format(
+        int(confidence * 100), bottom, top)
+
+    bottom, top = interval_estimate_variance(
+        sample_variance, n, confidence)
+    return_str += "母分散の{}%信頼区間            : [ {}, {} ]\n".format(
+        int(confidence * 100), bottom, top)
+
+    return return_str
+
+
+@click.command()
+@click.option("-f", "--file", type=click.Path(exists=True), default="data.csv")
+@click.option("-p", "--pop_variance", type=float, default=0, help="既知の母分散")
+@click.option("-c", "--confidence", type=float, default=0.95, help="信頼係数(default: 0.95)")
+def cmd(file, pop_variance: float, confidence: float):
+    with open(file) as f:
+        reader = csv.reader(f)
+        # 2-dimensional array, but each row can be different number of elements.
+        contents = [[float(v) for v in row] for row in reader]
+        for i, row in enumerate(contents):
+            n, sample_mean, sample_var, _ = describe(row)
+            result = estimate_all(n, sample_mean, sample_var, pop_variance, confidence)
+            print("系列{}".format(i + 1))
+            print(result)
+
+
+def main():
+    cmd()
+
+
+if __name__ == "__main__":
+    main()

@@ -33,25 +33,6 @@ def desc(ctx):
 
 
 @cmd.command()
-@click.pass_context
-@click.option("-p", "--pop_variance", type=float, default=0, help="既知の母分散")
-@click.option("-c", "--confidence", type=float, default=0.95, help="信頼係数(default: 0.95)")
-def est(ctx, pop_variance: float, confidence: float):
-    data = ctx.obj["data"]
-    if confidence <= 0 or confidence >= 1:
-        import sys
-        print("信頼係数は(0, 1)の範囲で指定してください．", file=sys.stderr)
-        exit()
-
-    for i, array in enumerate(data):
-        print("系列{}".format(i + 1))
-        length, sample_mean, sample_variance, _ = describe(array)
-        prompt.prompt_interval_estimate(
-            length, sample_mean, sample_variance, pop_variance, confidence)
-        print()
-
-
-@cmd.command()
 @click.option("-n", type=int, default=0, help="データの大きさ")
 @click.option("-h", "--hypothesis", type=float, default=0, help="帰無仮説で等しいと仮定する平均")
 @click.option("-m", "--mean", type=float, default=0, help="標本平均")
