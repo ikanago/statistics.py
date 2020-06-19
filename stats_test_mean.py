@@ -35,14 +35,18 @@ def test_mean_with_pop_variance(n: int, target_mean: float, sample_mean: float, 
 @click.option("-n", type=int, default=0, help="データの大きさ")
 @click.option("-h", "--hypothesis", type=float, default=0, help="帰無仮説で等しいと仮定する平均")
 @click.option("-m", "--mean", type=float, default=0, help="標本平均")
-@click.option("-p", "--pop_variance", type=float, default=0, help="既知の母分散")
+@click.option("-pv", "--pop_variance", type=float, default=0, help="既知の母分散")
+@click.option("-ps", "--pop_stdev", type=float, default=0, help="既知の母標準偏差")
 @click.option("-l", "--level", type=float, default=0.95, help="有意水準(default: 0.95)")
 @click.option("-s", "--side", type=click.Choice(["double", "left", "right"]), default="double", help="検定方法(両側，左片側，右片側)")
-def cmd(n: int, hypothesis: float, mean: float, pop_variance: float, level: float, side: str):
+def cmd(n: int, hypothesis: float, mean: float, pop_variance: float, pop_stdev: float, level: float, side: str):
     if level <= 0 or level >= 1:
         import sys
         print("信頼係数は(0, 1)の範囲で指定してください．", file=sys.stderr)
         exit()
+
+    if pop_variance <= 0:
+        pop_variance = math.pow(pop_stdev, 2)
 
     if pop_variance > 0:
         (is_reject, test_stat) = test_mean_with_pop_variance(
