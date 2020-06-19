@@ -81,24 +81,24 @@ def interval_estimate_variance(sample_variance: float, n: int, confidence: float
 
 
 def estimate_all(n: int, sample_mean: float, sample_variance: float, pop_variance: float, confidence: float):
-    return_str = ""
+    resutl_str = ""
     if pop_variance > 0:
         bottom, top = interval_estimate_mean_with_pop_variance(
             sample_mean, pop_variance, n, confidence)
-        return_str += "母平均の{}%信頼区間(母分散既知): [ {}, {} ]\n".format(
+        resutl_str += "母平均の{}%信頼区間(母分散既知): [ {}, {} ]\n".format(
             int(confidence * 100), bottom, top)
 
     bottom, top = interval_estimate_mean_without_pop_variance(
         sample_mean, sample_variance, n, confidence)
-    return_str += "母平均の{}%信頼区間(母分散未知): [ {}, {} ]\n".format(
+    resutl_str += "母平均の{}%信頼区間(母分散未知): [ {}, {} ]\n".format(
         int(confidence * 100), bottom, top)
 
     bottom, top = interval_estimate_variance(
         sample_variance, n, confidence)
-    return_str += "母分散の{}%信頼区間            : [ {}, {} ]\n".format(
+    resutl_str += "母分散の{}%信頼区間            : [ {}, {} ]\n".format(
         int(confidence * 100), bottom, top)
 
-    return return_str
+    return resutl_str
 
 
 @click.command()

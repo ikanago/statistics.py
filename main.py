@@ -5,7 +5,6 @@ import click
 import numpy as np
 
 import interval_estimation
-import prompt
 import stats_test
 from describe import describe
 
@@ -20,16 +19,6 @@ def cmd(ctx, file):
         contents = [[float(v) for v in row] for row in reader]
         data = contents
         ctx.obj["data"] = data
-
-
-@cmd.command()
-@click.pass_context
-def desc(ctx):
-    data = ctx.obj["data"]
-    for i, array in enumerate(data):
-        print("系列{}".format(i + 1))
-        prompt.prompt_describe(array)
-        print()
 
 
 @cmd.command()
@@ -51,17 +40,6 @@ def test_mean(n: int, hypothesis: float, mean: float, pop_variance: float, level
         print("帰無仮説 'μ = {}' は棄却されました{}".format(hypothesis, test_stat))
     else:
         print("帰無仮説 'μ = {}' は採択されました{}".format(hypothesis, test_stat))
-
-
-def side_from_str(side: str) -> stats_test.Side:
-    if side == "double":
-        return stats_test.Side.DOUBLE
-    elif side == "left":
-        return stats_test.Side.LEFT
-    elif side == "right":
-        return stats_test.Side.RIGHT
-    else:
-        return None
 
 
 def main():

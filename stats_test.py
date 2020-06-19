@@ -18,6 +18,17 @@ class Side(Enum):
     RIGHT = 3
 
 
+def side_from_str(side: str) -> Side:
+    if side == "double":
+        return Side.DOUBLE
+    elif side == "left":
+        return Side.LEFT
+    elif side == "right":
+        return Side.RIGHT
+    else:
+        return None
+
+
 def is_reject(test_stats: float, side: Side, bottom: float, top: float, bottom_left: float, top_right: float) -> bool:
     """
     帰無仮説が棄却されるかどうかを返す．
@@ -51,25 +62,10 @@ def is_reject(test_stats: float, side: Side, bottom: float, top: float, bottom_l
             return False
 
 
-def test_mean_with_pop_variance(n: int, target_mean: float, sample_mean: float, pop_variance: float, significance: float, side: Side) -> (bool, float):
-    """
-    平均値に関するz検定を行う．
-
-    ## Parameters  
-    `n`: 標本の大きさ  
-    `target_mean`: 帰無仮説において等しいと仮定する平均値  
-    `sample_mean`: 標本平均  
-    `pop_variance`: 既知の母分散  
-    `significance`: 有意水準  
-    `side`: 棄却域の取り方
-
-    ## Returns  
-    `is_reject`: 帰無仮説が棄却されるかどうか
-    """
-
-    z = (sample_mean - target_mean) / math.sqrt(pop_variance / n)
-    bottom = stats.norm.ppf((1 - significance) / 2)
-    top = stats.norm.ppf((1 + significance) / 2)
-    bottom_left = stats.norm.ppf(1 - significance)
-    top_right = stats.norm.ppf(significance)
-    return (is_reject(z, side, bottom, top, bottom_left, top_right), z)
+def show_result(is_reject: bool, test_stat: float, hypothesis: float):
+    result_str = "実現値: {}\n".format(test_stat)
+    if is_reject:
+        result_str += "帰無仮説 'μ = {}' は棄却されました".format(hypothesis)
+    else:
+        result_str += "帰無仮説 'μ = {}' は採択されました".format(hypothesis)
+    return result_str
