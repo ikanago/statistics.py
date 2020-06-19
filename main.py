@@ -56,16 +56,16 @@ def est(ctx, pop_variance: float, confidence: float):
 @click.option("-h", "--hypothesis", type=float, default=0, help="帰無仮説で等しいと仮定する平均")
 @click.option("-m", "--mean", type=float, default=0, help="標本平均")
 @click.option("-p", "--pop_variance", type=float, default=0, help="既知の母分散")
-@click.option("-c", "--significance", type=float, default=0.95, help="有意水準(default: 0.95)")
-@click.option("-s", "--side", type=click.Choice(["double", "left", "right"]), default="double", help="検定方法(両側，左片側，右片側")
-def test(n: int, hypothesis: float, mean: float, pop_variance: float, significance: float, side: str):
-    if significance <= 0 or significance >= 1:
+@click.option("-l", "--level", type=float, default=0.95, help="有意水準(default: 0.95)")
+@click.option("-s", "--side", type=click.Choice(["double", "left", "right"]), default="double", help="検定方法(両側，左片側，右片側)")
+def test_mean(n: int, hypothesis: float, mean: float, pop_variance: float, level: float, side: str):
+    if level <= 0 or level >= 1:
         import sys
         print("信頼係数は(0, 1)の範囲で指定してください．", file=sys.stderr)
         exit()
 
     (is_reject, test_stat) = stats_test.test_mean_with_pop_variance(
-        n, hypothesis, mean, pop_variance, significance, side_from_str(side))
+        n, hypothesis, mean, pop_variance, level, side_from_str(side))
     if is_reject:
         print("帰無仮説 'μ = {}' は棄却されました{}".format(hypothesis, test_stat))
     else:

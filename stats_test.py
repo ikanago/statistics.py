@@ -72,5 +72,4 @@ def test_mean_with_pop_variance(n: int, target_mean: float, sample_mean: float, 
     top = stats.norm.ppf((1 + significance) / 2)
     bottom_left = stats.norm.ppf(1 - significance)
     top_right = stats.norm.ppf(significance)
-    print(bottom, top)
     return (is_reject(z, side, bottom, top, bottom_left, top_right), z)
