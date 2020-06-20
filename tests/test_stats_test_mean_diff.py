@@ -31,3 +31,29 @@ class TestStatsTestMeanDiff(TestCase):
             n1, mean1, variance1, n2, mean2, variance2, significance)
         self.assertFalse(is_reject)
         self.assertAlmostEqual(test_stat, -0.918, places=3)
+
+    def test_stats_test_mean_diff_without_pop_var1(self):
+        n1 = 15
+        mean1 = 68.4
+        variance1 = math.pow(10.2, 2)
+        n2 = 21
+        mean2 = 64.3
+        variance2 = math.pow(9.3, 2)
+        significance = 0.95
+        (is_reject, test_stat) = stats_test_mean_diff.test_mean_diff_without_pop_variance(
+            n1, mean1, variance1, n2, mean2, variance2, significance)
+        self.assertFalse(is_reject)
+        self.assertAlmostEqual(test_stat, 1.217, places=3)
+
+    def test_stats_test_mean_diff_without_pop_var2(self):
+        n1 = 30
+        mean1 = 5.2
+        variance1 = math.pow(2.4, 2)
+        n2 = 30
+        mean2 = 7.5
+        variance2 = math.pow(1.7, 2)
+        significance = 0.95
+        (is_reject, test_stat) = stats_test_mean_diff.test_mean_diff_without_pop_variance(
+            n1, mean1, variance1, n2, mean2, variance2, significance)
+        self.assertTrue(is_reject)
+        self.assertAlmostEqual(test_stat, -4.211, places=3)

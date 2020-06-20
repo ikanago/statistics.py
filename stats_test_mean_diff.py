@@ -33,6 +33,35 @@ def test_mean_diff_with_pop_variance(n1: int, mean1: float, pop_variance1: float
     return (is_reject, z)
 
 
+def test_mean_diff_without_pop_variance(n1: int, mean1: float, variance1: float, n2: int, mean2: float, variance2: float, significance: float) -> (bool, float):
+    """
+    平均値の差に関するt検定を行う．
+
+    ## Parameters
+    `n1`: 1つめの標本の大きさ
+    `mean1`: 1つめの標本の標本平均
+    `variance1`: 1つめの標本の標本分散
+    `n2`: 2つめの標本の大きさ
+    `mean2`: 2つめの標本の標本平均
+    `variance2`: 2つめの標本の標本分散
+    `significance`: 有意水準
+
+    ## Returns  
+    `is_reject`: 帰無仮説が棄却されるかどうか
+    `t`: 実現値
+    """
+
+    df = n1 + n2 - 2
+    u = (n1 * variance1 + n2 * variance2) / df
+    t = (mean1 - mean2) / math.sqrt(u * (1 / n1 + 1 / n2))
+    bottom = stats.t.ppf((1 - significance) / 2, df)
+    top = stats.t.ppf((1 + significance) / 2, df)
+    side = "double"
+    is_reject = stats_test.is_reject(
+        t, stats_test.side_from_str(side), bottom, top, None, None)
+    return (is_reject, t)
+
+
 @click.command()
 @click.option("-z", "--z_test", is_flag=True, help="既知の母分散を使うかどうか")
 @click.option("-n1", type=int, default=0, help="1つめの標本のデータの大きさ")
@@ -57,6 +86,9 @@ def cmd(z_test: bool, n1: int, mean1: float, variance1: float, stdev1: float, n2
 
     if z_test:
         (is_reject, test_stat) = test_mean_diff_with_pop_variance(
+            n1, mean1, variance1, n2, mean2, variance2, level)
+    else:
+        (is_reject, test_stat) = test_mean_diff_without_pop_variance(
             n1, mean1, variance1, n2, mean2, variance2, level)
 
     print(stats_test.show_result(is_reject, test_stat, "μ1", "μ2"))
