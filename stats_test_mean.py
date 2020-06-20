@@ -8,7 +8,7 @@ import stats_test
 
 def test_mean_with_pop_variance(n: int, target_mean: float, sample_mean: float, pop_stdev: float, significance: float, side: stats_test.Side) -> (bool, float):
     """
-    平均値に関するz検定を行う．
+    母分散既知において平均値に関するz検定を行う．
 
     ## Parameters  
     `n`: 標本の大きさ  
@@ -86,7 +86,7 @@ def cmd(z_test: bool, n: int, hypothesis: float, mean: float, variance: float, s
         (is_reject, test_stat) = test_mean_without_pop_variance(
             n, hypothesis, mean, stdev, level, stats_test.side_from_str(side))
 
-    print(stats_test.show_result(is_reject, test_stat, hypothesis))
+    print(stats_test.show_result(is_reject, test_stat, "μ", hypothesis))
 
 
 def main():

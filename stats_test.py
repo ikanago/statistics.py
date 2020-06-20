@@ -62,10 +62,12 @@ def is_reject(test_stats: float, side: Side, bottom: float, top: float, bottom_l
             return False
 
 
-def show_result(is_reject: bool, test_stat: float, hypothesis: float):
+def show_result(is_reject: bool, test_stat: float, hypothesis_l, hypothesis_r):
     result_str = "実現値: {}\n".format(test_stat)
     if is_reject:
-        result_str += "帰無仮説 'μ = {}' は棄却されました".format(hypothesis)
+        result_str += "帰無仮説 '{} = {}' は棄却されました".format(
+            hypothesis_l, hypothesis_r)
     else:
-        result_str += "帰無仮説 'μ = {}' は採択されました".format(hypothesis)
+        result_str += "帰無仮説 '{} = {}' は採択されました".format(
+            hypothesis_l, hypothesis_r)
     return result_str

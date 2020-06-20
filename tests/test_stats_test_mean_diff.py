@@ -1,0 +1,33 @@
+from unittest import TestCase
+
+import math
+import stats_test
+import stats_test_mean_diff
+
+
+class TestStatsTestMeanDiff(TestCase):
+    def test_stats_test_mean_diff_with_pop_var1(self):
+        n1 = 40
+        mean1 = 103
+        variance1 = math.pow(15, 2)
+        n2 = 35
+        mean2 = 101
+        variance2 = math.pow(15, 2)
+        significance = 0.95
+        (is_reject, test_stat) = stats_test_mean_diff.test_mean_diff_with_pop_variance(
+            n1, mean1, variance1, n2, mean2, variance2, significance)
+        self.assertFalse(is_reject)
+        self.assertAlmostEqual(test_stat, 0.576, places=3)
+
+    def test_stats_test_mean_diff_with_pop_var2(self):
+        n1 = 12
+        mean1 = 420.6
+        variance1 = math.pow(85, 2)
+        n2 = 16
+        mean2 = 450.4
+        variance2 = math.pow(85, 2)
+        significance = 0.95
+        (is_reject, test_stat) = stats_test_mean_diff.test_mean_diff_with_pop_variance(
+            n1, mean1, variance1, n2, mean2, variance2, significance)
+        self.assertFalse(is_reject)
+        self.assertAlmostEqual(test_stat, -0.918, places=3)
