@@ -10,7 +10,7 @@ class TestStatsTestVar(TestCase):
         n = 10
         target_variance = 0.090
         sample_variance = 0.107949
-        significance = 0.95
+        significance = 0.05
         (is_reject, test_stat) = stats_test_var.test_variance(
             n, target_variance, sample_variance, significance)
         self.assertFalse(is_reject)
@@ -20,7 +20,7 @@ class TestStatsTestVar(TestCase):
         n = 50
         target_variance = math.pow(10, 2)
         sample_variance = math.pow(8.8, 2)
-        significance = 0.95
+        significance = 0.05
         (is_reject, test_stat) = stats_test_var.test_variance(
             n, target_variance, sample_variance, significance)
         self.assertFalse(is_reject)

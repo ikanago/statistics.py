@@ -11,7 +11,7 @@ class TestStatsTestMean(TestCase):
         hypothesis = 60
         mean = 56.75
         pop_stdev = 15
-        level = 0.95
+        level = 0.05
         side = "double"
         (is_reject, test_stat) = stats_test_mean.test_mean_with_pop_variance(
             n, hypothesis, mean, pop_stdev, level, stats_test.side_from_str(side))
@@ -24,7 +24,7 @@ class TestStatsTestMean(TestCase):
         hypothesis = 30
         mean = 28.1
         pop_stdev = math.sqrt(60)
-        level = 0.95
+        level = 0.05
         side = "left"
         (is_reject, test_stat) = stats_test_mean.test_mean_with_pop_variance(
             n, hypothesis, mean, pop_stdev, level, stats_test.side_from_str(side))
@@ -37,7 +37,7 @@ class TestStatsTestMean(TestCase):
         hypothesis = 12
         mean = 12.36
         pop_stdev = math.sqrt(0.910)
-        level = 0.95
+        level = 0.05
         side = "double"
         (is_reject, test_stat) = stats_test_mean.test_mean_without_pop_variance(
             n, hypothesis, mean, pop_stdev, level, stats_test.side_from_str(side))

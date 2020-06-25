@@ -17,13 +17,13 @@ def test_variance(n: int, target_variance: float, sample_variance: float, signif
     `significance`: 有意水準
 
     ## Returns  
-    `is_reject`: 帰無仮説が棄却されるかどうか
+    `is_reject`: 帰無仮説が棄却されるかどうか  
     `x`: 実現値
     """
     x = n * sample_variance / target_variance
     df = n - 1
-    bottom = stats.chi2.ppf((1 - significance) / 2, df)
-    top = stats.chi2.ppf((1 + significance) / 2, df)
+    bottom = stats.chi2.ppf(significance / 2, df)
+    top = stats.chi2.ppf(1 + significance / 2, df)
     side = "double"
     is_reject = stats_test.is_reject(
         x, stats_test.side_from_str(side), bottom, top, None, None)
@@ -32,10 +32,10 @@ def test_variance(n: int, target_variance: float, sample_variance: float, signif
 
 @click.command()
 @click.option("-n", type=int, default=0, help="データの大きさ")
-@click.option("-h", "--hypothesis", type=float, default=0, help="帰無仮説で等しいと仮定する平均")
-@click.option("-vr", "--variance", type=float, default=0, help="既知の母分散/標本分散")
-@click.option("-sd", "--stdev", type=float, default=0, help="既知の母標準偏差/標本標準偏差")
-@click.option("-l", "--level", type=float, default=0.95, help="有意水準(default: 0.95)")
+@click.option("-h", "--hypothesis", type=float, default=0, help="帰無仮説で等しいと仮定する分散")
+@click.option("-vr", "--variance", type=float, default=0, help="標本分散")
+@click.option("-sd", "--stdev", type=float, default=0, help="標本標準偏差")
+@click.option("-l", "--level", type=float, default=0.05, help="有意水準(default: 0.05)")
 def cmd(n: int, hypothesis: float, variance: float, stdev: float, level: float):
     if level <= 0 or level >= 1:
         import sys

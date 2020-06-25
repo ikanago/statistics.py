@@ -20,13 +20,13 @@ def test_mean_diff_with_pop_variance(n1: int, mean1: float, pop_variance1: float
     `significance`: 有意水準
 
     ## Returns  
-    `is_reject`: 帰無仮説が棄却されるかどうか
+    `is_reject`: 帰無仮説が棄却されるかどうか  
     `z`: 実現値
     """
 
     z = (mean1 - mean2) / math.sqrt(pop_variance1 / n1 + pop_variance2 / n2)
-    bottom = stats.norm.ppf((1 - significance) / 2)
-    top = stats.norm.ppf((1 + significance) / 2)
+    bottom = stats.norm.ppf(significance / 2)
+    top = stats.norm.ppf(1 + significance / 2)
     side = "double"
     is_reject = stats_test.is_reject(
         z, stats_test.side_from_str(side), bottom, top, None, None)
@@ -54,8 +54,8 @@ def test_mean_diff_without_pop_variance(n1: int, mean1: float, variance1: float,
     df = n1 + n2 - 2
     u = (n1 * variance1 + n2 * variance2) / df
     t = (mean1 - mean2) / math.sqrt(u * (1 / n1 + 1 / n2))
-    bottom = stats.t.ppf((1 - significance) / 2, df)
-    top = stats.t.ppf((1 + significance) / 2, df)
+    bottom = stats.t.ppf(significance / 2, df)
+    top = stats.t.ppf(1 + significance / 2, df)
     side = "double"
     is_reject = stats_test.is_reject(
         t, stats_test.side_from_str(side), bottom, top, None, None)
@@ -82,8 +82,8 @@ def test_mean_diff_with_big_sample(n1: int, mean1: float, pop_variance1: float, 
 
     z = (mean1 - mean2) / math.sqrt(pop_variance1 /
                                     (n1 - 1) + pop_variance2 / (n2 - 1))
-    bottom = stats.norm.ppf((1 - significance) / 2)
-    top = stats.norm.ppf((1 + significance) / 2)
+    bottom = stats.norm.ppf(significance / 2)
+    top = stats.norm.ppf(1 + significance / 2)
     side = "double"
     is_reject = stats_test.is_reject(
         z, stats_test.side_from_str(side), bottom, top, None, None)
@@ -101,7 +101,7 @@ def test_mean_diff_with_big_sample(n1: int, mean1: float, pop_variance1: float, 
 @click.option("-m2", "--mean2", type=float, default=0, help="2つめの標本の標本平均")
 @click.option("-vr2", "--variance2", type=float, default=0, help="2つめの標本の既知の母分散")
 @click.option("-sd2", "--stdev2", type=float, default=0, help="2つめの標本の既知の母標準偏差")
-@click.option("-l", "--level", type=float, default=0.95, help="有意水準(default: 0.95)")
+@click.option("-l", "--level", type=float, default=0.05, help="有意水準(default: 0.05)")
 def cmd(z_test: bool, big_sample: bool, n1: int, mean1: float, variance1: float, stdev1: float, n2: int, mean2: float, variance2: float, stdev2: float, level: float):
     if level <= 0 or level >= 1:
         import sys

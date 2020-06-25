@@ -13,7 +13,7 @@ class TestStatsTestMeanDiff(TestCase):
         n2 = 35
         mean2 = 101
         variance2 = math.pow(15, 2)
-        significance = 0.95
+        significance = 0.05
         (is_reject, test_stat) = stats_test_mean_diff.test_mean_diff_with_pop_variance(
             n1, mean1, variance1, n2, mean2, variance2, significance)
         self.assertFalse(is_reject)
@@ -26,7 +26,7 @@ class TestStatsTestMeanDiff(TestCase):
         n2 = 16
         mean2 = 450.4
         variance2 = math.pow(85, 2)
-        significance = 0.95
+        significance = 0.05
         (is_reject, test_stat) = stats_test_mean_diff.test_mean_diff_with_pop_variance(
             n1, mean1, variance1, n2, mean2, variance2, significance)
         self.assertFalse(is_reject)
@@ -39,7 +39,7 @@ class TestStatsTestMeanDiff(TestCase):
         n2 = 21
         mean2 = 64.3
         variance2 = math.pow(9.3, 2)
-        significance = 0.95
+        significance = 0.05
         (is_reject, test_stat) = stats_test_mean_diff.test_mean_diff_without_pop_variance(
             n1, mean1, variance1, n2, mean2, variance2, significance)
         self.assertFalse(is_reject)
@@ -52,7 +52,7 @@ class TestStatsTestMeanDiff(TestCase):
         n2 = 30
         mean2 = 7.5
         variance2 = math.pow(1.7, 2)
-        significance = 0.95
+        significance = 0.05
         (is_reject, test_stat) = stats_test_mean_diff.test_mean_diff_without_pop_variance(
             n1, mean1, variance1, n2, mean2, variance2, significance)
         self.assertTrue(is_reject)
