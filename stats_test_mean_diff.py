@@ -95,12 +95,12 @@ def test_mean_diff_with_big_sample(n1: int, mean1: float, pop_variance1: float, 
 @click.option("-b", "--big_sample", is_flag=True, help="サンプル数が十分大きいとみなして正規分布を使うかどうか")
 @click.option("-n1", type=int, default=0, help="1つめの標本のデータの大きさ")
 @click.option("-m1", "--mean1", type=float, default=0, help="1つめの標本の標本平均")
-@click.option("-vr1", "--variance1", type=float, default=0, help="1つめの標本の既知の母分散")
-@click.option("-sd1", "--stdev1", type=float, default=0, help="1つめの標本の既知の母標準偏差")
+@click.option("-vr1", "--variance1", type=float, default=0, help="1つめの標本の既知の母分散/標本分散")
+@click.option("-sd1", "--stdev1", type=float, default=0, help="1つめの標本の既知の母標準偏差/標本標準偏差")
 @click.option("-n2", type=int, default=0, help="2つめの標本のデータの大きさ")
 @click.option("-m2", "--mean2", type=float, default=0, help="2つめの標本の標本平均")
-@click.option("-vr2", "--variance2", type=float, default=0, help="2つめの標本の既知の母分散")
-@click.option("-sd2", "--stdev2", type=float, default=0, help="2つめの標本の既知の母標準偏差")
+@click.option("-vr2", "--variance2", type=float, default=0, help="2つめの標本の既知の母分散/標本分散")
+@click.option("-sd2", "--stdev2", type=float, default=0, help="2つめの標本の既知の母標準偏差/標本標準偏差")
 @click.option("-l", "--level", type=float, default=0.05, help="有意水準(default: 0.05)")
 def cmd(z_test: bool, big_sample: bool, n1: int, mean1: float, variance1: float, stdev1: float, n2: int, mean2: float, variance2: float, stdev2: float, level: float):
     if level <= 0 or level >= 1:
