@@ -53,20 +53,35 @@ $ python describe.py -f test.csv
 ### 推定
 なにも指定しなくても推定は3種類同時に行われる．
 ```
+python estimation.py --help
+Usage: estimation.py [OPTIONS]
+
+Options:
+  -f, --file PATH
+  -p, --pop_variance FLOAT  既知の母分散
+  -c, --confidence FLOAT    信頼係数(default: 0.95)
+  --help                    Show this message and exit.
+```
+```
 $ python estimation.py -p 5.0 -c 0.95
 系列1
 母平均の95%信頼区間(母分散既知): [ 4.177472522949508, 7.755860810383823 ]
 母平均の95%信頼区間(母分散未知): [ 4.280152521665077, 7.653180811668255 ]
 母分散の95%信頼区間          : [ 1.0062989539639977, 15.53555451320764 ]
 ```
-`-p`: 既知の母分散．省略すると母分散既知の母平均推定は行われない．  
-`-c`: 信頼係数(default: 0.95)．
+`-p`を省略すると母分散既知の母平均推定は行われない．
+```
+$ python estimation.py -c 0.95
+系列1
+母平均の95%信頼区間(母分散未知): [ 4.280152521665077, 7.653180811668255 ]
+母分散の95%信頼区間          : [ 1.0062989539639977, 15.53555451320764 ]
+```
 
 ### 検定
 #### 平均の検定
 帰無仮説 H_0: `μ = μ_0`の検定を行う．  
 ```
-python stats_test_mean.py --help                   
+python stats_test_mean.py --help
 Usage: stats_test_mean.py [OPTIONS]
 
 Options:
