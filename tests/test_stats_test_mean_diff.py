@@ -57,3 +57,29 @@ class TestStatsTestMeanDiff(TestCase):
             n1, mean1, variance1, n2, mean2, variance2, significance)
         self.assertTrue(is_reject)
         self.assertAlmostEqual(test_stat, -4.211, places=3)
+
+    def test_stats_test_mean_diff_with_big_sample1(self):
+        n1 = 50
+        mean1 = 60.5
+        variance1 = math.pow(8.2, 2)
+        n2 = 70
+        mean2 = 55.2
+        variance2 = math.pow(7.7, 2)
+        significance = 0.05
+        (is_reject, test_stat) = stats_test_mean_diff.test_mean_diff_with_big_sample(
+            n1, mean1, variance1, n2, mean2, variance2, significance)
+        self.assertTrue(is_reject)
+        self.assertAlmostEqual(test_stat, 3.548, places=3)
+
+    def test_stats_test_mean_diff_with_big_sample2(self):
+        n1 = 120
+        mean1 = 83.2
+        variance1 = math.pow(16.8, 2)
+        n2 = 90
+        mean2 = 74.5
+        variance2 = math.pow(12.5, 2)
+        significance = 0.05
+        (is_reject, test_stat) = stats_test_mean_diff.test_mean_diff_with_big_sample(
+            n1, mean1, variance1, n2, mean2, variance2, significance)
+        self.assertTrue(is_reject)
+        self.assertAlmostEqual(test_stat, 4.282, places=3)

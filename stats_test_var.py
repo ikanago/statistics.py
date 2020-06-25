@@ -23,7 +23,7 @@ def test_variance(n: int, target_variance: float, sample_variance: float, signif
     x = n * sample_variance / target_variance
     df = n - 1
     bottom = stats.chi2.ppf(significance / 2, df)
-    top = stats.chi2.ppf(1 + significance / 2, df)
+    top = stats.chi2.ppf(1 - significance / 2, df)
     side = "double"
     is_reject = stats_test.is_reject(
         x, stats_test.side_from_str(side), bottom, top, None, None)

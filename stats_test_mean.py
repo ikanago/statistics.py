@@ -25,7 +25,7 @@ def test_mean_with_pop_variance(n: int, target_mean: float, sample_mean: float, 
 
     z = (sample_mean - target_mean) / (pop_stdev / math.sqrt(n))
     bottom = stats.norm.ppf(significance / 2)
-    top = stats.norm.ppf(1 + significance / 2)
+    top = stats.norm.ppf(1 - significance / 2)
     bottom_left = stats.norm.ppf(1 - significance)
     top_right = stats.norm.ppf(significance)
     is_reject = stats_test.is_reject(

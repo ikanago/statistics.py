@@ -26,7 +26,7 @@ def test_mean_diff_with_pop_variance(n1: int, mean1: float, pop_variance1: float
 
     z = (mean1 - mean2) / math.sqrt(pop_variance1 / n1 + pop_variance2 / n2)
     bottom = stats.norm.ppf(significance / 2)
-    top = stats.norm.ppf(1 + significance / 2)
+    top = stats.norm.ppf(1 - significance / 2)
     side = "double"
     is_reject = stats_test.is_reject(
         z, stats_test.side_from_str(side), bottom, top, None, None)
@@ -55,7 +55,7 @@ def test_mean_diff_without_pop_variance(n1: int, mean1: float, variance1: float,
     u = (n1 * variance1 + n2 * variance2) / df
     t = (mean1 - mean2) / math.sqrt(u * (1 / n1 + 1 / n2))
     bottom = stats.t.ppf(significance / 2, df)
-    top = stats.t.ppf(1 + significance / 2, df)
+    top = stats.t.ppf(1 - significance / 2, df)
     side = "double"
     is_reject = stats_test.is_reject(
         t, stats_test.side_from_str(side), bottom, top, None, None)
@@ -83,7 +83,7 @@ def test_mean_diff_with_big_sample(n1: int, mean1: float, pop_variance1: float, 
     z = (mean1 - mean2) / math.sqrt(pop_variance1 /
                                     (n1 - 1) + pop_variance2 / (n2 - 1))
     bottom = stats.norm.ppf(significance / 2)
-    top = stats.norm.ppf(1 + significance / 2)
+    top = stats.norm.ppf(1 - significance / 2)
     side = "double"
     is_reject = stats_test.is_reject(
         z, stats_test.side_from_str(side), bottom, top, None, None)
