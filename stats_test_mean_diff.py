@@ -80,7 +80,8 @@ def test_mean_diff_with_big_sample(n1: int, mean1: float, pop_variance1: float, 
     `z`: 実現値
     """
 
-    z = (mean1 - mean2) / math.sqrt(pop_variance1 / (n1 - 1) + pop_variance2 / (n2 - 1))
+    z = (mean1 - mean2) / math.sqrt(pop_variance1 /
+                                    (n1 - 1) + pop_variance2 / (n2 - 1))
     bottom = stats.norm.ppf((1 - significance) / 2)
     top = stats.norm.ppf((1 + significance) / 2)
     side = "double"
