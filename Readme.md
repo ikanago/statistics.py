@@ -100,13 +100,13 @@ Options:
 ```
 $ python stats_test_mean.py -z -n 30 -h 60 -m 56.75 -sd 15
 実現値: -1.18673220792786
-帰無仮説 'μ = 60.0' は採択されました
+帰無仮説 μ = 60.0 は採択されました
 ```
 母分散未知の場合はt分布を使用する:
 ```
 $ python stats_test_mean.py -n 10 -h 12 -m 12.36 -vr 0.910
 実現値: 1.13214762365967
-帰無仮説 'μ = 12.0' は採択されました
+帰無仮説 μ = 12.0 は採択されました
 ```
 
 ### 平均の差の検定
@@ -134,19 +134,19 @@ Options:
 ```
 $ python stats_test_mean_diff.py -z -n1 40 -m1 103 -sd1 15 -n2 35 -m2 101 -sd2 15
 実現値: 0.5760658398584765
-帰無仮説 'μ1 = μ2' は採択されました
+帰無仮説 μ1 = μ2 は採択されました
 ```
 母分散未知で分散が等しいとみなせる場合はt分布を使用する:
 ```
 $ python stats_test_mean_diff.py -n1 15 -m1 68.4 -sd1 10.2 -n2 21 -m2 64.3 -sd2 9.3
 実現値: 1.2169392110479802
-帰無仮説 'μ1 = μ2' は採択されました
+帰無仮説 μ1 = μ2 は採択されました
 ```
 母分散未知でサンプル数が十分に大きい場合は正規分布を使用する．オプションとして`-b`をつけて実行する:
 ```
 $ python stats_test_mean_diff.py -b -n1 120 -m1 83.2 -sd1 16.8 -n2 90 -m2 74.5 -sd2 12.5
 実現値: 4.282347279436892
-帰無仮説 'μ1 = μ2' は棄却されました
+帰無仮説 μ1 = μ2 は棄却されました
 ```
 
 ### 分散の検定
@@ -168,7 +168,7 @@ Options:
 ```
 $ python stats_test_var.py -n 10 -h 0.09 -vr 0.108 
 実現値: 12.000000000000002
-帰無仮説 'σ = 0.09' は採択されました
+帰無仮説 σ = 0.09 は採択されました
 ```
 
 ### 分散比の検定
@@ -192,5 +192,52 @@ F分布を使用する:
 ```
 python stats_test_var_ratio.py -n1 10 -vr1 8.8 -n2 8 -vr2 10.1 -l 0.10
 実現値: 0.8470847084708472
-帰無仮説 'σ1 = σ2' は採択されました
+帰無仮説 σ1 = σ2 は採択されました
+```
+
+### 相関係数の検定
+帰無仮説 H_0: `ρ = ρ_0`の検定を行う．
+```
+$ python stats_test_correl.py --help
+Usage: stats_test_correl.py [OPTIONS]
+
+Options:
+  -n INTEGER              標本の大きさ
+  -h, --hypothesis FLOAT  帰無仮説で等しいと仮定する相関係数
+  -r FLOAT                標本相関係数
+  -l, --level FLOAT       有意水準(default: 0.05)
+  --help                  Show this message and exit.
+```
+正規分布を使用する．
+```
+$ python stats_test_correl.py -n 48 -h 0.7 -r 0.648
+実現値: -0.640346768650969
+帰無仮説 r = 0.7 は採択されました
+```
+`-h`を指定しない，あるいは0を指定した場合は無相関の検定を行う:
+```
+python stats_test_correl.py -n 25 -r 0.352
+実現値: 1.8035605728697404
+帰無仮説 r = 0.0 は採択されました
+```
+
+### 相関係数の差の検定
+帰無仮説 H_0: `ρ_1 = ρ_2`の検定を行う．
+```
+$ python stats_test_correl_diff.py --help
+Usage: stats_test_correl_diff.py [OPTIONS]
+
+Options:
+  -n1 INTEGER        1つめの標本の大きさ
+  -n2 INTEGER        2つめの標本の大きさ
+  -r1 FLOAT          1つめの標本の標本相関係数
+  -r2 FLOAT          2つめの標本の標本相関係数
+  -l, --level FLOAT  有意水準(default: 0.05)
+  --help             Show this message and exit.
+```
+正規分布を使用する．
+```
+$ python stats_test_correl_diff.py -n1 80 -n2 65 -r1 0.538 -r2 0.743
+実現値: -2.08520190531367
+帰無仮説 r1 = r2 は棄却されました
 ```

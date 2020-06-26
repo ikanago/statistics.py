@@ -12,7 +12,8 @@ class TestStatsTestVarRatio(TestCase):
         n2 = 8
         sample_variance2 = 10.1
         significance = 0.10
-        (is_reject, test_stat) = stats_test_var_ratio.test_var_ratio(n1, sample_variance1, n2, sample_variance2, significance)
+        (is_reject, test_stat) = stats_test_var_ratio.test_var_ratio(
+            n1, sample_variance1, n2, sample_variance2, significance)
         self.assertFalse(is_reject)
         self.assertAlmostEqual(test_stat, 0.847, places=3)
 
@@ -22,6 +23,7 @@ class TestStatsTestVarRatio(TestCase):
         n2 = 21
         sample_variance2 = 13.8
         significance = 0.05
-        (is_reject, test_stat) = stats_test_var_ratio.test_var_ratio(n1, sample_variance1, n2, sample_variance2, significance)
+        (is_reject, test_stat) = stats_test_var_ratio.test_var_ratio(
+            n1, sample_variance1, n2, sample_variance2, significance)
         self.assertFalse(is_reject)
         self.assertAlmostEqual(test_stat, 0.92, places=3)
