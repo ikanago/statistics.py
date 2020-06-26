@@ -6,7 +6,7 @@ from scipy import stats
 import stats_test
 
 
-def test_correl(n: int, r: float, significance: float) -> (bool, float):
+def test_no_correl(n: int, r: float, significance: float) -> (bool, float):
     """
     無相関かどうかのt検定を行う．
 
@@ -42,7 +42,7 @@ def cmd(n: int, r: float, hypothesis: float, level: float):
         exit()
 
     if hypothesis == 0.0:
-        (is_reject, test_stat) = test_correl(n, r, level)
+        (is_reject, test_stat) = test_no_correl(n, r, level)
     else:
         pass
 

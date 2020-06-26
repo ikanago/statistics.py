@@ -15,7 +15,6 @@ class TestStatsTestMean(TestCase):
         side = "double"
         (is_reject, test_stat) = stats_test_mean.test_mean_with_pop_variance(
             n, hypothesis, mean, pop_stdev, level, stats_test.side_from_str(side))
-
         self.assertFalse(is_reject)
         self.assertAlmostEqual(test_stat, -1.187, places=3)
 
@@ -28,7 +27,6 @@ class TestStatsTestMean(TestCase):
         side = "left"
         (is_reject, test_stat) = stats_test_mean.test_mean_with_pop_variance(
             n, hypothesis, mean, pop_stdev, level, stats_test.side_from_str(side))
-
         self.assertTrue(is_reject)
         self.assertAlmostEqual(test_stat, -1.734, places=3)
 
@@ -41,7 +39,5 @@ class TestStatsTestMean(TestCase):
         side = "double"
         (is_reject, test_stat) = stats_test_mean.test_mean_without_pop_variance(
             n, hypothesis, mean, stdev, level, stats_test.side_from_str(side))
-
         self.assertFalse(is_reject)
-        print(test_stat)
         self.assertAlmostEqual(test_stat, 1.132, places=3)
