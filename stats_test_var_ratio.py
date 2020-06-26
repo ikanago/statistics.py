@@ -34,10 +34,10 @@ def test_var_ratio(n1: int, sample_variance1: float, n2: int, sample_variance2: 
 
 
 @click.command()
-@click.option("-n1", type=int, default=0, help="1つめの標本のデータの大きさ")
+@click.option("-n1", type=int, default=0, help="1つめの標本の標本の大きさ")
 @click.option("-vr1", "--variance1", type=float, default=0, help="1つめの標本の標本分散")
 @click.option("-sd1", "--stdev1", type=float, default=0, help="1つめの標本の標本標準偏差")
-@click.option("-n2", type=int, default=0, help="2つめの標本のデータの大きさ")
+@click.option("-n2", type=int, default=0, help="2つめの標本の標本の大きさ")
 @click.option("-vr2", "--variance2", type=float, default=0, help="2つめの標本の標本分散")
 @click.option("-sd2", "--stdev2", type=float, default=0, help="2つめの標本の標本標準偏差")
 @click.option("-l", "--level", type=float, default=0.05, help="有意水準(default: 0.05)")
@@ -51,7 +51,8 @@ def cmd(n1: int, variance1: float, stdev1: float, n2: int, variance2: float, std
         variance1 = math.pow(stdev1, 2)
     if variance2 <= 0:
         variance2 = math.pow(stdev2, 2)
-    (is_reject, test_stat) = test_var_ratio(n1, variance1, n2, variance2, level)
+    (is_reject, test_stat) = test_var_ratio(
+        n1, variance1, n2, variance2, level)
 
     print(stats_test.show_result(is_reject, test_stat, "σ1", "σ2"))
 

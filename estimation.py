@@ -22,7 +22,7 @@ def interval_estimate_mean_with_pop_variance(sample_mean: float, pop_variance: f
 
     `pop_variance`: 母分散
 
-    `n`: データ数
+    `n`: 標本数
 
     `confidence`: 信頼係数
 
@@ -44,7 +44,7 @@ def interval_estimate_mean_without_pop_variance(sample_mean: float, sample_varia
 
     `sample_variance`: 標本分散
 
-    n: データ数
+    n: 標本数
 
     `confidence`: 信頼係数
 
@@ -65,7 +65,7 @@ def interval_estimate_variance(sample_variance: float, n: int, confidence: float
     ## Parameters
     `sample_variance`: 標本分散
 
-    `n`: データ数
+    `n`: 標本数
 
     `confidence`: 信頼係数
 

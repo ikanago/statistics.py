@@ -5,17 +5,17 @@ import numpy as np
 
 def describe(data: list) -> (int, float, float, float):
     """
-    データの基本的な統計量を求める．
+    標本の基本的な統計量を求める．
 
     ## Parameters
 
-    `data`: 対象データ
+    `data`: 対象標本
 
     ## Returns
 
     (`length`, `sample_mean`, `sample_variance`, `unbiased_variance`):
 
-        データの大きさ，標本平均，標本分散，不偏分散
+        標本の大きさ，標本平均，標本分散，不偏分散
     """
     data = np.array(data)
     sample_mean = data.mean()
@@ -35,7 +35,7 @@ def cmd(file):
             length, sample_mean, sample_variance, unbiased_variance = describe(
                 row)
             print("系列{}".format(i + 1))
-            print("データ数: {}".format(length))
+            print("標本数: {}".format(length))
             print("標本平均: {}".format(sample_mean))
             print("標本分散: {}".format(sample_variance))
             print("不偏分散: {}\n".format(unbiased_variance))

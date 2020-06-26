@@ -17,34 +17,34 @@
 * 分散比
 
 ## 使い方
-まずCSVファイルに対象となるデータを書き込んでおく(検定を行う場合で，必要な統計量が既知の場合は不要)．
+まずCSVファイルに対象となる標本を書き込んでおく(検定を行う場合で，必要な統計量が既知の場合は不要)．
 ```
 6.0, 8.5, 4.1, 4.9, 5.2, 7.1
 ```
 
 ### 基本的な統計量(descrive)
-データ数・標本平均・標本分散・不偏分散を算出して表示する．
+標本数・標本平均・標本分散・不偏分散を算出して表示する．
 ```
 $ python main.py desc -f test.csv
 系列1
-データ数: 6
+標本数: 6
 標本平均: 5.966666666666666
 標本分散: 2.1522222222222216
 不偏分散: 2.582666666666666
 ```
 ファイルを指定しない場合は`data.csv`を読みにいく．
 
-CSVファイルに複数行に分けてデータを記録すると，各行ごとに計算を行う．
+CSVファイルに複数行に分けて標本を記録すると，各行ごとに計算を行う．
 ```
 $ python describe.py -f test.csv
 系列1
-データ数: 6
+標本数: 6
 標本平均: 5.966666666666666
 標本分散: 2.1522222222222216
 不偏分散: 2.582666666666666
 
 系列2
-データ数: 8
+標本数: 8
 標本平均: 4.2
 標本分散: 2.8125
 不偏分散: 3.2142857142857144
@@ -86,7 +86,7 @@ Usage: stats_test_mean.py [OPTIONS]
 
 Options:
   -z, --z_test                    既知の母分散を使うかどうか
-  -n INTEGER                      データの大きさ
+  -n INTEGER                      標本の大きさ
   -h, --hypothesis FLOAT          帰無仮説で等しいと仮定する平均
   -m, --mean FLOAT                標本平均
   -vr, --variance FLOAT           既知の母分散/標本分散
@@ -118,11 +118,11 @@ Usage: stats_test_mean_diff.py [OPTIONS]
 Options:
   -z, --z_test             既知の母分散を使うかどうか
   -b, --big_sample         サンプル数が十分大きいとみなして正規分布を使うかどうか
-  -n1 INTEGER              1つめの標本のデータの大きさ
+  -n1 INTEGER              1つめの標本の標本の大きさ
   -m1, --mean1 FLOAT       1つめの標本の標本平均
   -vr1, --variance1 FLOAT  1つめの標本の既知の母分散/標本分散
   -sd1, --stdev1 FLOAT     1つめの標本の既知の母標準偏差/標本標準偏差
-  -n2 INTEGER              2つめの標本のデータの大きさ
+  -n2 INTEGER              2つめの標本の標本の大きさ
   -m2, --mean2 FLOAT       2つめの標本の標本平均
   -vr2, --variance2 FLOAT  2つめの標本の既知の母分散/標本分散
   -sd2, --stdev2 FLOAT     2つめの標本の既知の母標準偏差/標本標準偏差
@@ -156,7 +156,7 @@ $ python stats_test_var.py --help
 Usage: stats_test_var.py [OPTIONS]
 
 Options:
-  -n INTEGER              データの大きさ
+  -n INTEGER              標本の大きさ
   -h, --hypothesis FLOAT  帰無仮説で等しいと仮定する分散
   -vr, --variance FLOAT   標本分散
   -sd, --stdev FLOAT      標本標準偏差
@@ -178,10 +178,10 @@ $ python stats_test_var_ratio.py --help
 Usage: stats_test_var_ratio.py [OPTIONS]
 
 Options:
-  -n1 INTEGER              1つめの標本のデータの大きさ
+  -n1 INTEGER              1つめの標本の標本の大きさ
   -vr1, --variance1 FLOAT  1つめの標本の標本分散
   -sd1, --stdev1 FLOAT     1つめの標本の標本標準偏差
-  -n2 INTEGER              2つめの標本のデータの大きさ
+  -n2 INTEGER              2つめの標本の標本の大きさ
   -vr2, --variance2 FLOAT  2つめの標本の標本分散
   -sd2, --stdev2 FLOAT     2つめの標本の標本標準偏差
   -l, --level FLOAT        有意水準(default: 0.05)

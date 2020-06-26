@@ -31,7 +31,7 @@ def test_variance(n: int, target_variance: float, sample_variance: float, signif
 
 
 @click.command()
-@click.option("-n", type=int, default=0, help="データの大きさ")
+@click.option("-n", type=int, default=0, help="標本の大きさ")
 @click.option("-h", "--hypothesis", type=float, default=0, help="帰無仮説で等しいと仮定する分散")
 @click.option("-vr", "--variance", type=float, default=0, help="標本分散")
 @click.option("-sd", "--stdev", type=float, default=0, help="標本標準偏差")
